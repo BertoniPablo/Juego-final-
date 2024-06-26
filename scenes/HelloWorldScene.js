@@ -13,7 +13,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.score = 0;
     this.survivalTime = 0; // Tiempo de supervivencia
     this.shapes = {
-      oreos: { points: 10, count: 0 },
+      anzuelo: { points: 10, count: 0 },
     };
   }
 
@@ -25,8 +25,11 @@ export default class HelloWorldScene extends Phaser.Scene {
     //import personaje
     this.load.image("personaje", "./public/assets/pez1.png");
 
-    // importar recolectable
-    this.load.image("oreos", "./public/assets/oreo.png");
+    // importar recolectable anzuelo 
+    this.load.image("anzuelo", "./public/assets/anzuelo.png");
+
+    // importar recolectable oreos
+    this.load.image("oreo", "./public/assets/oreo.png");
 
     // importamos la musica defondo
     this.load.audio("musicafondo", "./public/assets/musicafondo.mp3");
@@ -56,9 +59,6 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.personaje.setCollideWorldBounds(true);
     this.personaje.body.setAllowGravity(false)
 
-    //agregar colision entre personaje y plataforma
-    this.physics.add.collider(this.personaje, this.arena);
-
     //crear teclas
     this.cursor = this.input.keyboard.createCursorKeys();
 
@@ -80,10 +80,13 @@ export default class HelloWorldScene extends Phaser.Scene {
       10,
       50,
       `Puntaje: ${this.score}
-        T: ${this.shapes["oreos"].count}
+        T: ${this.shapes["anzuelo"].count}
       `);
       // crear grupo recolectables
       this.recolectables = this.physics.add.group();
+
+      //agregar colision entre personaje y recolectables
+    this.physics.add.overlap(this.personaje, this.recolectables, this.collectAnzuelo, null, this);
 
       // Reproducir la música de fondo
     this.musicafondo = this.sound.add("musicafondo", {
@@ -91,6 +94,17 @@ export default class HelloWorldScene extends Phaser.Scene {
       loop: true,
     });
     this.musicafondo.play();
+      // add tecla r
+    this.r = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+
+      // Crear grupo de oreo
+    this.oreo = this.physics.add.group()
+    this.timer = this.time.addEvent({
+      delay: 4000, // Cada 4 segundos
+      callback: this.crearoreo,
+      callbackScope: this,
+      loop: true
+    });
 
   }
 
@@ -127,22 +141,57 @@ export default class HelloWorldScene extends Phaser.Scene {
       return;
     }
     // crear recolectable
-    const tipos = ["oreos"];
+    const tipos = ["anzuelo"];
 
     const tipo = Phaser.Math.RND.pick(tipos);
     let recolectable = this.recolectables.create(
-      Phaser.Math.Between(10, 790),
+      Phaser.Math.Between(10, 1200),
       0,
       tipo
     );
-    // Escalar las oreos
-    if (tipo === "oreos") {
-      recolectable.setScale(0.5); // Ajusta el tamaño aquí
+    // Escalar los anzuelo
+    if (tipo === "anzuelo") {
+      recolectable.setScale(0.2); // Ajusta el tamaño aquí
     }
   }
+
+  collectAnzuelo(personaje, anzuelo) {
+    anzuelo.disableBody(true, true);
+
+    this.shapes["anzuelo"].count++;
+    if (this.shapes["anzuelo"].count >= 3) {
+      this.gameOver = true;
+      this.physics.pause();
+      personaje.setTint(0xff0000);
+      personaje.anims.play('turn');
+      this.musicafondo.stop();
+      // Agrega cualquier lógica adicional que desees para el fin del juego aquí.
+    }
+
+    this.scoreText.setText(`Puntaje: ${this.score} T: ${this.shapes["anzuelo"].count}`);
+  }
+
   moveParallax() {
     this.parallaxLayers.forEach((layer) => {
       layer.sprite.tilePositionX += layer.speed;
     });
   }
+
+  crearoreo(){
+    const x = 800;
+    const y = Phaser.Math.Between(300, 1200);
+    const oreo = this.physics.add.sprite(x, y, "oreo");
+    oreo.setScale(0.2); // 
+    // Configuración del cuerpo de colisión
+    oreo.body.setSize(oreo.width * 0.5, oreo.height * 0.5); // Ajustar el tamaño del cuerpo de colisión
+    oreo.body.setOffset(oreo.width * 0.25, oreo.height * 0.25); // Ajustar el desplazamiento del cuerpo de colisión
+    // Ajustes adicionales
+    oreo.setVelocityX(-500); 
+    oreo.setImmovable(true);
+    oreo.body.allowGravity = false;
+    // Colisión con el personaje
+    this.physics.add.overlap(this.personaje, oreo, this.colisionoreo, null, this);
+  }
+
 }
+
