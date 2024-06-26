@@ -21,9 +21,6 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     //import Fondo
     this.load.image("Fondo", "./public/assets/Fondo.jpeg");
-  
-    //import plataforma
-   this.load.image("arena", "./public/assets/arena.png");
     
     //import personaje
     this.load.image("personaje", "./public/assets/pez1.png");
@@ -50,11 +47,6 @@ export default class HelloWorldScene extends Phaser.Scene {
         sprite: this.Fondo,
       }
     ]
-    // crear grupo Plataformas
-    this.arena = this.physics.add.staticGroup();
-    // al grupo de Plataformas agregar una plataforma
-    this.arena.create(400, 568, "arena").setScale(2).refreshBody();
-
     //crear personaje
     this.personaje = this.physics.add.sprite(400, 300, "personaje");
     this.personaje.setScale(0.3);
