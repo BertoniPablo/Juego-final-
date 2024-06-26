@@ -26,7 +26,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image("personaje", "./public/assets/pez1.png");
 
     // importar recolectable anzuelo 
-    this.load.image("anzuelo", "./public/assets/masita.png");
+    this.load.image("anzuelo", "./public/assets/Anzuelo.png");
 
     // importar recolectable oreos
     this.load.image("oreo", "./public/assets/oreo.png");
