@@ -11,11 +11,9 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.gameOver = false;
     this.timer = 30;
     this.score = 0;
+    this.survivalTime = 0; // Tiempo de supervivencia
     this.shapes = {
       oreos: { points: 10, count: 0 },
-      cuadrado: { points: 20, count: 0 },
-      rombo: { points: 30, count: 0 },
-      bomb: { points: -10, count: 0 },
     };
   }
 
@@ -69,11 +67,11 @@ export default class HelloWorldScene extends Phaser.Scene {
     //crear teclas
     this.cursor = this.input.keyboard.createCursorKeys();
 
-   //agregar texto de timer en la esquina superior derecha
-    this.timerText = this.add.text(10, 10, `tiempo restante: ${this.timer}`, {
-      ontSize: "32px",
-      fill: "#000000",
-       });
+   //agregar texto de timer en la esquina superior derecha el cual es el que contiene el tiempo sobrevivido 
+       this.survivalTimeText = this.add.text(10, 90, `Tiempo sobrevivido: ${this.survivalTime}`, {
+        fontSize: "20px",
+        fill: "#000000",
+      });
     
      // evento 1 segundo
      this.time.addEvent({
@@ -114,6 +112,12 @@ export default class HelloWorldScene extends Phaser.Scene {
         this.personaje.setVelocityY(330)
       }
       else {this.personaje.setVelocityY (0)} 
+
+      // Incrementar el tiempo de supervivencia
+    if (!this.gameOver) {
+      this.survivalTime += 1 / 60; // Asumiendo 60 FPS
+      this.survivalTimeText.setText(`Score: ${this.survivalTime.toFixed(2)}`);
+    }
   }
   
   onSecond() {
