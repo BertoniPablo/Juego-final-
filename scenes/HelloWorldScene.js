@@ -27,6 +27,9 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     // importar recolectable
     this.load.image("oreos", "./public/assets/oreo.png");
+
+    // importamos la musica defondo
+    this.load.audio("musicafondo", "./public/assets/musicafondo.mp3");
   }
 
   create() {
@@ -81,6 +84,13 @@ export default class HelloWorldScene extends Phaser.Scene {
       `);
       // crear grupo recolectables
       this.recolectables = this.physics.add.group();
+
+      // Reproducir la música de fondo
+    this.musicafondo = this.sound.add("musicafondo", {
+      volume: 0.1,
+      loop: true,
+    });
+    this.musicafondo.play();
 
   }
 
