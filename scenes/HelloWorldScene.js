@@ -35,9 +35,23 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
   create() {
-    this.Fondo = this.add.image(400, 300, "Fondo");
-    this.Fondo.setScale(2);
+    this.Fondo = this.add.image(600, 300, "Fondo");
+    this.Fondo.setScale(1.2);
 
+    //movimiento del fondo
+    this.Fondo = this.add.tileSprite(
+      this.game.config.width / 2,
+      this.game.config.height / 2,
+      this.game.config.width,
+      this.game.config.height,
+      "Fondo"
+    );
+    this.parallaxLayers = [
+      {
+        speed: 0.5,
+        sprite: this.Fondo,
+      }
+    ]
     // crear grupo Plataformas
     this.arena = this.physics.add.staticGroup();
     // al grupo de Plataformas agregar una plataforma
@@ -47,6 +61,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.personaje = this.physics.add.sprite(400, 300, "personaje");
     this.personaje.setScale(0.2);
     this.personaje.setCollideWorldBounds(true);
+    this.personaje.body.setAllowGravity(false)
 
     //agregar colision entre personaje y plataforma
     this.physics.add.collider(this.personaje, this.arena);
@@ -79,7 +94,10 @@ export default class HelloWorldScene extends Phaser.Scene {
 
   }
 
-  update() {
+  update() {  
+
+    // Mover el fondo
+    this.Fondo.tilePositionX += 1;
 
       // movimiento personaje
       if (this.cursor.left.isDown) {
@@ -89,9 +107,13 @@ export default class HelloWorldScene extends Phaser.Scene {
       } else {
         this.personaje.setVelocityX(0);
       }
-      if (this.cursor.up.isDown && this.personaje.body.touching.down) {
+      if (this.cursor.up.isDown) {
         this.personaje.setVelocityY(-330);
       }
+      else if (this.cursor.down.isDown) {
+        this.personaje.setVelocityY(330)
+      }
+      else {this.personaje.setVelocityY (0)} 
   }
   
   onSecond() {
@@ -107,5 +129,10 @@ export default class HelloWorldScene extends Phaser.Scene {
       0,
       tipo
     );
+  }
+  moveParallax() {
+    this.parallaxLayers.forEach((layer) => {
+      layer.sprite.tilePositionX += layer.speed;
+    });
   }
 }
