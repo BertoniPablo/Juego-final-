@@ -151,7 +151,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     );
     // Escalar los anzuelo
     if (tipo === "anzuelo") {
-      recolectable.setScale(0.3); // Ajusta el tamaño aquí
+      recolectable.setScale(0.5); // Ajusta el tamaño aquí
     }
   }
 
