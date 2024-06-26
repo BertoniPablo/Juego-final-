@@ -26,7 +26,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image("personaje", "./public/assets/pez1.png");
 
     // importar recolectable anzuelo 
-    this.load.image("anzuelo", "./public/assets/ninja.png");
+    this.load.image("anzuelo", "./public/assets/masita.png");
 
     // importar recolectable oreos
     this.load.image("oreo", "./public/assets/oreo.png");
@@ -151,7 +151,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     );
     // Escalar los anzuelo
     if (tipo === "anzuelo") {
-      recolectable.setScale(0.2); // Ajusta el tamaño aquí
+      recolectable.setScale(0.7); // Ajusta el tamaño aquí
     }
   }
 
