@@ -59,7 +59,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     //crear personaje
     this.personaje = this.physics.add.sprite(400, 300, "personaje");
-    this.personaje.setScale(0.2);
+    this.personaje.setScale(0.3);
     this.personaje.setCollideWorldBounds(true);
     this.personaje.body.setAllowGravity(false)
 
@@ -95,9 +95,9 @@ export default class HelloWorldScene extends Phaser.Scene {
   }
 
   update() {  
-
-    // Mover el fondo
-    this.Fondo.tilePositionX += 1;
+    
+      // Mover el fondo
+      this.Fondo.tilePositionX += 1;
 
       // movimiento personaje
       if (this.cursor.left.isDown) {
@@ -129,6 +129,10 @@ export default class HelloWorldScene extends Phaser.Scene {
       0,
       tipo
     );
+    // Escalar las oreos
+    if (tipo === "oreos") {
+      recolectable.setScale(0.5); // Ajusta el tamaño aquí
+    }
   }
   moveParallax() {
     this.parallaxLayers.forEach((layer) => {
