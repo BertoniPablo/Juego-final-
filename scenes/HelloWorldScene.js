@@ -26,7 +26,7 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.load.image("personaje", "./public/assets/pez1.png");
 
     // importar recolectable anzuelo 
-    this.load.image("anzuelo", "./public/assets/anzuelo.png");
+    this.load.image("anzuelo", "./public/assets/ninja.png");
 
     // importar recolectable oreos
     this.load.image("oreo", "./public/assets/oreo.png");
@@ -186,12 +186,11 @@ export default class HelloWorldScene extends Phaser.Scene {
     oreo.body.setSize(oreo.width * 0.5, oreo.height * 0.5); // Ajustar el tamaño del cuerpo de colisión
     oreo.body.setOffset(oreo.width * 0.25, oreo.height * 0.25); // Ajustar el desplazamiento del cuerpo de colisión
     // Ajustes adicionales
-    oreo.setVelocityX(-500); 
+    oreo.setVelocityX(-300); 
     oreo.setImmovable(true);
     oreo.body.allowGravity = false;
     // Colisión con el personaje
     this.physics.add.overlap(this.personaje, oreo, this.colisionoreo, null, this);
   }
-
 }
 
