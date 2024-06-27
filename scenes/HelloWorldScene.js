@@ -145,7 +145,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     const tipo = Phaser.Math.RND.pick(tipos);
     let recolectable = this.recolectables.create(
-      Phaser.Math.Between(10, 1200),
+      Phaser.Math.Between(10, 1000),
       0,
       tipo
     );
