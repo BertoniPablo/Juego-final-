@@ -145,7 +145,7 @@ export default class HelloWorldScene extends Phaser.Scene {
 
     const tipo = Phaser.Math.RND.pick(tipos);
     let recolectable = this.recolectables.create(
-      Phaser.Math.Between(10, 1000),
+      Phaser.Math.Between(10, 1200),
       0,
       tipo
     );
@@ -175,22 +175,6 @@ export default class HelloWorldScene extends Phaser.Scene {
     this.parallaxLayers.forEach((layer) => {
       layer.sprite.tilePositionX += layer.speed;
     });
-  }
-
-  crearoreo(){
-    const x = 800;
-    const y = Phaser.Math.Between(300, 1200);
-    const oreo = this.physics.add.sprite(x, y, "oreo");
-    oreo.setScale(0.2); // 
-    // Configuración del cuerpo de colisión
-    oreo.body.setSize(oreo.width * 0.5, oreo.height * 0.5); // Ajustar el tamaño del cuerpo de colisión
-    oreo.body.setOffset(oreo.width * 0.25, oreo.height * 0.25); // Ajustar el desplazamiento del cuerpo de colisión
-    // Ajustes adicionales
-    oreo.setVelocityX(-300); 
-    oreo.setImmovable(true);
-    oreo.body.allowGravity = false;
-    // Colisión con el personaje
-    this.physics.add.overlap(this.personaje, oreo, this.colisionoreo, null, this);
   }
 }
 
