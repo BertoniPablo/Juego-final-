@@ -15,7 +15,6 @@ export default class inicio extends Phaser.Scene {
     }
     inicio(pointer){
         this.scene.start("HelloWorldScene")
-    
      }
   
     update() {
