@@ -1,6 +1,6 @@
 export default class HelloWorldScene extends Phaser.Scene {
   constructor() {
-    super("hello-world");
+    super("HelloWorldScene");
   }
 
   init() {
@@ -69,6 +69,10 @@ export default class HelloWorldScene extends Phaser.Scene {
     
     // Timer para la aparición de anzuelos
     this.anzueloTimer = this.time.addEvent({ delay: this.anzueloDelay, callback: this.crearAnzuelo, callbackScope: this, loop: true });
+
+    this.pointer = this.input.activePointer;
+    //crear tecla
+    this.r = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
   }
 
   update() {
@@ -131,6 +135,7 @@ export default class HelloWorldScene extends Phaser.Scene {
       this.physics.pause();
       personaje.setTint(0xff0000);
       this.musicafondo.stop();
+      this.scene.start("end",{score:this.score,gameOver:this.gameOver})
       // Lógica adicional para el fin del juego
     }
   }
